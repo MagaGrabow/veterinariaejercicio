@@ -9,13 +9,14 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
     "veterinaria/utils/Formatter",
+    "veterinaria/utils/Constants"
 
 
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageToast, Services, JSONModel, Fragment, Device, Filter, FilterOperator, Sorter, Formatter) {
+    function (Controller, MessageToast, Services, JSONModel, Fragment, Device, Filter, FilterOperator, Sorter, Formatter,Constants) {
         "use strict";
 
         return Controller.extend("veterinaria.controller.MainView", {
@@ -55,7 +56,7 @@ sap.ui.define([
 
                 this.oFilterBreed= this.getSearchFilter ("breed", oEvent.getParameter ("query"), FilterOperator.Contains);
 
-                this.onFilterChange (this.byId("tableid"), this.getFilters());
+                this.onFilterChange (this.byId(Constants.ID.tablas.ejemplo), this.getFilters());
                
             },
 
@@ -121,7 +122,7 @@ sap.ui.define([
             },
 
             onOpenSortPopUp: function (oEvent) {
-                this.openSettingDialog(this.byId("sortDialog"), "veterinaria.view.fragment.sorterPopUp");
+                this.openSettingDialog(this.byId("sortDialog"), Constants.routes.sortDialog);
             },
             test: function () {
                 if (!this._oDialogSort) {
