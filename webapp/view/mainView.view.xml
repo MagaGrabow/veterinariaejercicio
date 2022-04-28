@@ -1,0 +1,142 @@
+<mvc:View
+    controllerName="veterinaria.controller.mainView"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+>
+    <Shell id="shell">
+        <App id="app">
+        <pages >
+        <Page id="pagetabla">
+         <Table id="tableid" items="{path: 'modeloPrueba>/' }"  >
+
+          		<headerToolbar>
+			<OverflowToolbar id="toolbar">
+
+            <Toolbar id="search" >
+            <Title  id="titlesearchname" text="{i18n>Search Name}"/>
+            <!-- <ToolbarSpace id="barspacer"  /> -->
+
+            <SearchField id="searchfield"  width="20%" search=".onFilterName"/>
+             <Toolbar id="searchraza" >
+            <Title  id="titlesearchraza" text="{i18n>Search Breed}"/>
+            <!-- <ToolbarSpace id="barspacer2"  /> -->
+
+            <SearchField id="searchfield2"  width="40%" search=".onFilterBreed"/>
+
+            
+         </Toolbar>
+
+            
+         </Toolbar>
+
+         
+
+       
+				<content>
+					<Title id="titletoolbar" text="{i18n>Veterinaria}" level="H2"/>
+					<ToolbarSpacer id="spacer" />
+					
+                  
+                
+				
+           	        
+
+                
+                  <Button type="Reject" id="button2" icon="sap-icon://sort" press="onOpenSortPopUp" />
+			        
+					
+				</content>
+			</OverflowToolbar>
+		</headerToolbar>
+
+            <columns>
+                <Column id="uno"  >
+                    <Text id="textid" text="{i18n>name}"/>
+
+                </Column>
+
+                <Column id="dos"  >
+                    <Text id="textdos" text="{i18n>breed}"/>
+
+                </Column>
+
+                 <Column id="tres"  >
+                    <Text id="texttres" text="{i18n>owner}"/>
+
+                </Column>
+
+                 <Column id="cuatro"  >
+                    <Text id="textcuatro" text="{i18n>owner_email}"/>
+
+                </Column>
+
+                 <Column id="cinco"  >
+                    <Text id="textcinco" text="{i18n>owner_phone}"/>
+
+                </Column>
+                <Column id="seis"  >
+                    <Text id="textseis" text="{i18n>specie}"/>
+
+                </Column>
+
+
+
+
+
+            </columns>
+            <items>
+                <ColumnListItem id="Listaitems" >
+                <cells>
+
+
+                        <!-- <Text id="textocells1"
+                            text="{modeloPrueba>name}" /> -->
+                        <ObjectStatus  id="colores"
+
+                            text="{path: 'modeloPrueba>name'}"
+
+                            state="{path: 'modeloPrueba>specie', formatter: '.Formatter.formatterspeciecolor'}" />  
+
+
+                        <Text id="textocells2"
+                            text="{modeloPrueba>breed}" />
+
+
+                        <Text id="textocells3"
+                            text="{modeloPrueba>owner}" /> 
+
+                        <Text id="textocells4"
+                            text="{modeloPrueba>owner_email}" /> 
+
+                        <Text id="textocells5"
+                            text="{modeloPrueba>owner_phone}" /> 
+
+                        
+                        <Text id="textocells6"
+                            text="{modeloPrueba>specie}" />    
+                            
+
+                          
+
+                   
+
+                 
+                </cells>
+                </ColumnListItem>
+             </items>
+
+            </Table>
+
+        </Page>
+
+
+            
+
+         
+        </pages>
+
+           
+        </App>
+    </Shell>
+</mvc:View>
