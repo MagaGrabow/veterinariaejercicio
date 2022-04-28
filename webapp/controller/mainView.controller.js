@@ -9,18 +9,18 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
     "veterinaria/utils/Formatter",
-   
- 
+
+
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageToast, Services,JSONModel, Fragment,Device, Filter,FilterOperator,Sorter,Formatter) {
+    function (Controller, MessageToast, Services, JSONModel, Fragment, Device, Filter, FilterOperator, Sorter, Formatter) {
         "use strict";
 
         return Controller.extend("veterinaria.controller.MainView", {
             Formatter: Formatter,
-            
+
             _mViewSettingsDialogs: {},
 
             onInit: async function () {
@@ -29,7 +29,7 @@ sap.ui.define([
 
 
             },
-          
+
             loadModel: async function (json, path) {
                 const oResponse = await Services.getLocalJSON(
                     json
@@ -45,34 +45,65 @@ sap.ui.define([
 
             onFilterName: function (oEvent) {
 
-                // build filter array
-                var aFilter = [];
-                var sQuery = oEvent.getParameter("query");
-                if (sQuery) {
-                    aFilter.push(new Filter("name", FilterOperator.Contains, sQuery));
-                }
+                this.oFilterName = this.getSearchFilter ("name", oEvent.getParameter("query"), FilterOperator.Contains);
 
-                // filter binding
-                var oTable = this.byId("tableid");
-                var oBinding = oTable.getBinding("items");
-                oBinding.filter(aFilter);
+                this.onFilterChange (this.byId("tableid"), this.getFilters());
             },
 
+            
             onFilterBreed: function (oEvent) {
 
-                // build filter array
-                var aFilter = [];
-                var sQuery = oEvent.getParameter("query");
+                this.oFilterBreed= this.getSearchFilter ("breed", oEvent.getParameter ("query"), FilterOperator.Contains);
+
+                this.onFilterChange (this.byId("tableid"), this.getFilters());
+               
+            },
+
+            getSearchFilter: function (sField, sQuery, oFilterOperator) {
+
+                let oFilter;
                 if (sQuery) {
-                    aFilter.push(new Filter("breed", FilterOperator.Contains, sQuery));
+                    oFilter = new Filter(sField, oFilterOperator, sQuery);
+                }
+                else { 
+                    oFilter = null;
+
+                }
+                return oFilter;
+            },
+
+
+            onFilterChange: function (oTable, aFilters){
+                             
+                var oBinding = oTable.getBinding("items");
+                
+                if (aFilters){
+                    var oFilter = new Filter (aFilters, true )
+                    oBinding.filter(oFilter)
+
+
+
                 }
 
-                // filter binding
-                var oTable = this.byId("tableid");
-                var oBinding = oTable.getBinding("items");
-                oBinding.filter(aFilter);
             },
-            
+
+            getFilters: function (){
+
+                var aFilters = [];
+
+                if (this.oFilterName){
+                    aFilters.push (this.oFilterName)
+                }
+
+                if (this.oFilterBreed){
+                    aFilters.push (this.oFilterBreed)
+                }
+                
+                return aFilters;
+
+            },
+
+
             onSortDialogConfirm: function (oEvent) {
                 let oMParams = oEvent.getParameters(),
                     oTable = this.byId("tableid"),
@@ -88,7 +119,7 @@ sap.ui.define([
 
 
             },
-            
+
             onOpenSortPopUp: function (oEvent) {
                 this.openSettingDialog(this.byId("sortDialog"), "veterinaria.view.fragment.sorterPopUp");
             },
